@@ -55,6 +55,7 @@ export default function MasonryGrid() {
                     <div
                         key={project.id}
                         className="group relative break-inside-avoid overflow-hidden bg-neutral-900"
+                        data-cursor="view"
                     >
                         <div className="relative aspect-[4/5] w-full overflow-hidden grayscale transition-all duration-500 group-hover:grayscale-0">
                             {/* eslint-disable-next-line @next/next/no-img-element */}

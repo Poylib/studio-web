@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 export default function CustomCursor() {
     const cursorX = useMotionValue(-100);
@@ -11,8 +11,7 @@ export default function CustomCursor() {
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
-    const [isHovering, setIsHovering] = useState(false);
-
+    const [cursorVariant, setCursorVariant] = useState<"default" | "hover" | "view">("default");
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -23,9 +22,15 @@ export default function CustomCursor() {
             cursorY.set(e.clientY - 8);
 
             const target = e.target as HTMLElement;
-            // Check if hovering over interactive elements
-            const isInteractive = target.closest("a, button, [data-cursor='hover']");
-            setIsHovering(!!isInteractive);
+
+            // Check for specific cursor triggers
+            if (target.closest("[data-cursor='view']")) {
+                setCursorVariant("view");
+            } else if (target.closest("a, button, [data-cursor='hover']")) {
+                setCursorVariant("hover");
+            } else {
+                setCursorVariant("default");
+            }
         };
 
         window.addEventListener("mousemove", moveCursor);
@@ -34,6 +39,27 @@ export default function CustomCursor() {
 
     if (!isMounted) return null;
 
+    const variants = {
+        default: {
+            scale: 1,
+            backgroundColor: "rgba(255, 255, 255, 1)",
+            border: "0px solid transparent",
+            backdropFilter: "none",
+        },
+        hover: {
+            scale: 2, // Subtle scale for links
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            border: "0px solid transparent",
+            backdropFilter: "none",
+        },
+        view: {
+            scale: 4, // Large scale for grid items
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(2px)",
+        },
+    };
+
     return (
         <motion.div
             className="pointer-events-none fixed top-0 left-0 z-[9999] flex h-4 w-4 items-center justify-center rounded-full bg-white mix-blend-difference"
@@ -41,26 +67,24 @@ export default function CustomCursor() {
                 x: cursorXSpring,
                 y: cursorYSpring,
             }}
-            animate={{
-                scale: isHovering ? 4 : 1,
-                backgroundColor: isHovering ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 1)",
-                border: isHovering ? "1px solid rgba(255, 255, 255, 0.2)" : "0px solid transparent",
-                backdropFilter: isHovering ? "blur(2px)" : "none",
-            }}
+            animate={variants[cursorVariant]}
             transition={{
                 scale: { type: "spring", stiffness: 300, damping: 20 },
                 layout: { duration: 0.3 }
             }}
         >
-            {isHovering && (
-                <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-[3px] font-bold tracking-widest text-white uppercase"
-                >
-                    View
-                </motion.span>
-            )}
+            <AnimatePresence>
+                {cursorVariant === "view" && (
+                    <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="text-[3px] font-bold tracking-widest text-white uppercase"
+                    >
+                        View
+                    </motion.span>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 }
