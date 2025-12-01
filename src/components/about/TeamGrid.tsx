@@ -8,29 +8,26 @@ const teamMembers = [
         name: "Sarah Kim",
         role: "Principal Architect",
         bio: "Leading the vision of structural silence with over 15 years of experience in minimalist architecture.",
-        image: "https://placehold.co/600x800/111/FFF?text=SK" // Placeholder
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&h=800&auto=format&fit=crop"
     },
     {
         name: "David Lee",
         role: "Creative Director",
         bio: "Focusing on the intersection of light, material, and human experience in spatial design.",
-        image: "https://placehold.co/600x800/111/FFF?text=DL" // Placeholder
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=600&h=800&auto=format&fit=crop"
     },
     {
         name: "Minji Park",
         role: "Senior Designer",
         bio: "Specializing in interior details and material selection that bring warmth to concrete spaces.",
-        image: "https://placehold.co/600x800/111/FFF?text=MP" // Placeholder
+        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&h=800&auto=format&fit=crop"
     },
-    // Example of scalability - uncomment to test 4th member
-    /*
     {
-      name: "James Chen",
-      role: "Visualizer",
-      bio: "Crafting hyper-realistic 3D visualizations that bridge the gap between concept and reality.",
-      image: "https://placehold.co/600x800/111/FFF?text=JC"
+        name: "James Chen",
+        role: "Visualizer",
+        bio: "Crafting hyper-realistic 3D visualizations that bridge the gap between concept and reality.",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&h=800&auto=format&fit=crop"
     }
-    */
 ];
 
 export default function TeamGrid() {
