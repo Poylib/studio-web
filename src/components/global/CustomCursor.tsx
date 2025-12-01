@@ -32,8 +32,8 @@ export default function CustomCursor() {
                 cursorY.set(e.clientY - 24);
             } else {
                 setCursorVariant("default");
-                cursorX.set(e.clientX - 6);
-                cursorY.set(e.clientY - 6);
+                cursorX.set(e.clientX - 12);
+                cursorY.set(e.clientY - 12);
             }
         };
 
@@ -45,8 +45,8 @@ export default function CustomCursor() {
 
     const variants = {
         default: {
-            width: 12,
-            height: 12,
+            width: 24,
+            height: 24,
             backgroundColor: "#EAEAEA", // Off-white
             border: "0px solid transparent",
             backdropFilter: "none",

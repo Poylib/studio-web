@@ -52,7 +52,12 @@ export default function WorkDetail({ work, nextWork }: WorkDetailProps) {
                         transition={{ delay: 0.2, duration: 0.8 }}
                         className="flex flex-wrap gap-4 text-sm font-mono text-neutral-400 uppercase tracking-widest"
                     >
-                        <span>{work.category}</span>
+                        <Link
+                            href={`/work?category=${work.category}`}
+                            className="hover:text-white transition-colors duration-300 border-b border-transparent hover:border-white"
+                        >
+                            {work.category}
+                        </Link>
                         <span>/</span>
                         <span>{work.year}</span>
                         <span>/</span>

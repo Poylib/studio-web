@@ -1,16 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import { works } from "@/data/works";
 
 const categories = ["All", "Video", "Individual", "Interior", "Commercial"];
 
 export default function WorkList() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const initialCategory = searchParams.get("category");
+
     const [activeCategory, setActiveCategory] = useState("All");
+
+    useEffect(() => {
+        if (initialCategory && categories.includes(initialCategory)) {
+            setActiveCategory(initialCategory);
+        } else {
+            setActiveCategory("All");
+        }
+    }, [initialCategory]);
+
+    const handleCategoryChange = (category: string) => {
+        setActiveCategory(category);
+        if (category === "All") {
+            router.push("/work", { scroll: false });
+        } else {
+            router.push(`/work?category=${category}`, { scroll: false });
+        }
+    };
 
     const filteredWorks = activeCategory === "All"
         ? works
@@ -23,7 +45,7 @@ export default function WorkList() {
                 {categories.map((category) => (
                     <button
                         key={category}
-                        onClick={() => setActiveCategory(category)}
+                        onClick={() => handleCategoryChange(category)}
                         className={cn(
                             "text-sm font-medium uppercase tracking-widest transition-colors duration-300",
                             activeCategory === category
