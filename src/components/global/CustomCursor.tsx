@@ -7,7 +7,8 @@ export default function CustomCursor() {
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
 
-    const springConfig = { damping: 25, stiffness: 700 };
+    // "Heavy" physics for Structural Silence feel
+    const springConfig = { damping: 40, stiffness: 300 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -17,19 +18,22 @@ export default function CustomCursor() {
     useEffect(() => {
         setIsMounted(true);
         const moveCursor = (e: MouseEvent) => {
-            // Center the cursor (base size 16px)
-            cursorX.set(e.clientX - 8);
-            cursorY.set(e.clientY - 8);
 
             const target = e.target as HTMLElement;
 
             // Check for specific cursor triggers
             if (target.closest("[data-cursor='view']")) {
                 setCursorVariant("view");
+                cursorX.set(e.clientX - 40);
+                cursorY.set(e.clientY - 40);
             } else if (target.closest("a, button, [data-cursor='hover']")) {
                 setCursorVariant("hover");
+                cursorX.set(e.clientX - 24);
+                cursorY.set(e.clientY - 24);
             } else {
                 setCursorVariant("default");
+                cursorX.set(e.clientX - 6);
+                cursorY.set(e.clientY - 6);
             }
         };
 
@@ -41,47 +45,58 @@ export default function CustomCursor() {
 
     const variants = {
         default: {
-            scale: 1,
-            backgroundColor: "rgba(255, 255, 255, 1)",
+            width: 12,
+            height: 12,
+            backgroundColor: "#EAEAEA", // Off-white
             border: "0px solid transparent",
             backdropFilter: "none",
+            mixBlendMode: "difference" as const,
+            boxShadow: "none",
         },
         hover: {
-            scale: 2, // Subtle scale for links
-            backgroundColor: "rgba(255, 255, 255, 0.5)",
-            border: "0px solid transparent",
-            backdropFilter: "none",
+            width: 48,
+            height: 48,
+            backgroundColor: "rgba(234, 234, 234, 0.1)",
+            border: "1px solid rgba(234, 234, 234, 0.2)",
+            backdropFilter: "blur(4px)",
+            mixBlendMode: "normal" as const,
+            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.1)",
         },
         view: {
-            scale: 4, // Large scale for grid items
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            backdropFilter: "blur(2px)",
+            width: 80,
+            height: 80,
+            backgroundColor: "rgba(234, 234, 234, 0.1)",
+            border: "1px solid rgba(234, 234, 234, 0.3)",
+            backdropFilter: "blur(8px)",
+            mixBlendMode: "normal" as const,
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
         },
     };
 
     return (
         <motion.div
-            className="pointer-events-none fixed top-0 left-0 z-[9999] flex h-4 w-4 items-center justify-center rounded-full bg-white mix-blend-difference"
+            className="pointer-events-none fixed top-0 left-0 z-[9999] flex items-center justify-center rounded-full"
             style={{
                 x: cursorXSpring,
                 y: cursorYSpring,
             }}
             animate={variants[cursorVariant]}
             transition={{
-                scale: { type: "spring", stiffness: 300, damping: 20 },
-                layout: { duration: 0.3 }
+                type: "spring",
+                stiffness: 300,
+                damping: 40,
+                mass: 0.8
             }}
         >
             <AnimatePresence>
                 {cursorVariant === "view" && (
                     <motion.span
-                        initial={{ opacity: 0, scale: 0.5 }}
+                        initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        className="text-[3px] font-bold tracking-widest text-white uppercase"
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="font-mono text-[10px] font-medium tracking-widest text-[#EAEAEA] uppercase"
                     >
-                        View
+                        VIEW
                     </motion.span>
                 )}
             </AnimatePresence>
