@@ -27,58 +27,73 @@ export default function History() {
         offset: ["start end", "end start"]
     });
 
-    const lineScale = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-
     return (
-        <section ref={containerRef} className="relative py-24 md:py-32 px-6 md:px-12 bg-neutral-950">
-            <div className="mx-auto max-w-5xl">
-                <div className="mb-16 md:mb-24">
+        <section ref={containerRef} className="relative py-32 px-6 md:px-12 bg-neutral-950 overflow-hidden">
+            <div className="mx-auto max-w-7xl">
+                {/* Section Header */}
+                <div className="mb-32 border-b border-neutral-800 pb-8 flex justify-between items-end">
                     <h2 className="text-4xl font-bold uppercase tracking-tighter text-white md:text-6xl">
                         History
                     </h2>
+                    <span className="font-mono text-neutral-500 text-sm">[ TIMELINE ]</span>
                 </div>
 
-                <div className="relative border-l border-neutral-800 ml-3 md:ml-0 pl-8 md:pl-16">
-                    {/* Animated Line Overlay */}
-                    <motion.div
-                        style={{ scaleY: lineScale }}
-                        className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-white origin-top"
-                    />
+                <div className="relative">
+                    {/* Vertical Grid Line */}
+                    <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-neutral-900 hidden md:block" />
+                    <div className="absolute left-1/3 top-0 bottom-0 w-[1px] bg-neutral-900 hidden md:block" />
+                    <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-neutral-900 hidden md:block" />
 
                     {historyData.map((yearGroup, yearIndex) => (
-                        <div key={yearGroup.year} className="mb-24 last:mb-0">
-                            <h3 className="text-8xl font-bold text-neutral-800 mb-12 select-none">
-                                {yearGroup.year}
-                            </h3>
-
-                            <div className="space-y-16">
-                                {yearGroup.events.map((event, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, x: -20 }}
+                        <div key={yearGroup.year} className="relative mb-32 last:mb-0 group">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                                {/* Year Column */}
+                                <div className="relative">
+                                    <motion.h3
+                                        initial={{ opacity: 0, x: -50 }}
                                         whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true, margin: "-100px" }}
-                                        transition={{ duration: 0.6, delay: index * 0.1 }}
-                                        className="relative group"
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8 }}
+                                        className="text-8xl md:text-9xl font-bold text-neutral-900 stroke-text select-none"
+                                        style={{ WebkitTextStroke: "1px #333" }}
                                     >
-                                        {/* Dot */}
-                                        <div className="absolute -left-[41px] md:-left-[73px] top-2 h-2.5 w-2.5 rounded-full border border-neutral-500 bg-neutral-950 group-hover:bg-white group-hover:border-white transition-colors duration-300" />
+                                        {yearGroup.year}
+                                    </motion.h3>
+                                </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 md:gap-8">
-                                            <span className="text-sm font-mono text-neutral-500 pt-1">
-                                                {event.month}
-                                            </span>
-                                            <div>
-                                                <h4 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-neutral-300 transition-colors">
-                                                    {event.title}
-                                                </h4>
-                                                <p className="text-neutral-500 max-w-md">
-                                                    {event.description}
-                                                </p>
+                                {/* Events Column */}
+                                <div className="md:col-span-2 space-y-24 pt-8">
+                                    {yearGroup.events.map((event, index) => (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.6, delay: index * 0.2 }}
+                                            className="relative pl-8 border-l border-neutral-800"
+                                        >
+                                            {/* Crosshair Marker */}
+                                            <div className="absolute -left-[5px] top-0 h-2.5 w-2.5 bg-neutral-950 border border-neutral-500 flex items-center justify-center">
+                                                <div className="w-[1px] h-full bg-neutral-500" />
+                                                <div className="h-[1px] w-full bg-neutral-500 absolute" />
                                             </div>
-                                        </div>
-                                    </motion.div>
-                                ))}
+
+                                            <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12">
+                                                <span className="text-sm font-mono text-neutral-500 w-12">
+                                                    {event.month}
+                                                </span>
+                                                <div>
+                                                    <h4 className="text-2xl font-bold text-white mb-4">
+                                                        {event.title}
+                                                    </h4>
+                                                    <p className="text-neutral-400 max-w-md leading-relaxed">
+                                                        {event.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     ))}
