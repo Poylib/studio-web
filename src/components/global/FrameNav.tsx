@@ -2,19 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import MenuOverlay from "./MenuOverlay";
 
-const getPageName = (path: string) => {
-    if (path === "/") return "Home";
-    if (path.startsWith("/work")) return "Work";
-    if (path.startsWith("/about")) return "About";
-    if (path.startsWith("/contact")) return "Contact";
-    return "Socon";
-};
-
 export default function FrameNav() {
-    const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
@@ -36,12 +26,6 @@ export default function FrameNav() {
                         {isMenuOpen ? "[ CLOSE ]" : "[ MENU ]"}
                     </button>
                 </div>
-
-                {/* Bottom Left */}
-                <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 opacity-50">
-                    <span>{getPageName(pathname)}</span>
-                </div>
-
                 {/* Bottom Right */}
                 <div className="pointer-events-auto absolute bottom-6 right-6 md:bottom-12 md:right-12">
                     <Link href="/contact" className="hover:opacity-50 transition-opacity">

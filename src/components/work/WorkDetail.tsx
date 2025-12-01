@@ -165,7 +165,7 @@ export default function WorkDetail({ work, nextWork }: WorkDetailProps) {
 
             {/* Next Project Navigation */}
             {nextWork && (
-                <Link href={`/work/${nextWork.id}`} className="block group relative overflow-hidden h-[60vh] w-full">
+                <Link href={`/work/${nextWork.slug}`} className="block group relative overflow-hidden h-[60vh] w-full">
                     <div className="absolute inset-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img

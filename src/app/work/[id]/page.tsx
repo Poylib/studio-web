@@ -11,13 +11,13 @@ interface PageProps {
 
 export async function generateStaticParams() {
     return works.map((work) => ({
-        id: work.id.toString(),
+        id: work.slug,
     }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { id } = await params;
-    const work = works.find((w) => w.id.toString() === id);
+    const work = works.find((w) => w.slug === id);
 
     if (!work) {
         return {
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function WorkDetailPage({ params }: PageProps) {
     const { id } = await params;
-    const work = works.find((w) => w.id.toString() === id);
+    const work = works.find((w) => w.slug === id);
 
     if (!work) {
         notFound();
@@ -92,7 +92,7 @@ export default async function WorkDetailPage({ params }: PageProps) {
                 "@type": "ListItem",
                 "position": 3,
                 "name": work.title,
-                "item": `https://socon.com/work/${work.id}`
+                "item": `https://socon.com/work/${work.slug}`
             }
         ]
     };

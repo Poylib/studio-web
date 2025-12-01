@@ -75,7 +75,7 @@ export default function WorkList() {
                             className="break-inside-avoid"
                         >
                             <Link
-                                href={`/work/${work.id}`}
+                                href={`/work/${work.slug}`}
                                 className="group block relative"
                                 data-cursor="view"
                             >
