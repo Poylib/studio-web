@@ -3,6 +3,7 @@ This document defines the **Technical Stack & Strict Engineering Standards** for
 **CRITICAL GOAL:** Achieve a **100/100 Lighthouse Score** and maximize **Search Engine Visibility** through cutting-edge Technical SEO.
 
 # 1. Core Framework: "Bleeding Edge"
+- **Package Manager:** pnpm (Recommended for speed & disk efficiency)
 - **Framework:** Next.js 16 (Canary/Latest)
     - **Rendering Strategy:** **Partial Prerendering (PPR)** is MANDATORY.
         - Static Parts (Shell, Footer, About): Prerender at build time (SSG).
