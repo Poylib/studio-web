@@ -54,7 +54,7 @@ export default function Footer() {
                     </div>
 
                     {/* Legal */}
-                    <div className="space-y-4">
+                    {/* <div className="space-y-4">
                         <h4 className="text-lg font-semibold text-white">Legal</h4>
                         <ul className="space-y-2 text-sm">
                             <li>
@@ -68,7 +68,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="mt-12 flex flex-col items-center justify-between border-t border-neutral-900 pt-8 text-xs md:flex-row">

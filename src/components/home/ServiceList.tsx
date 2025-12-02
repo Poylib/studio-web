@@ -51,10 +51,12 @@ export default function ServiceList() {
                         <div className="pointer-events-none fixed top-0 left-0 z-0 h-full w-full opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-hover:translate-x-[20%] group-hover:-translate-y-[10%] scale-80 translate-x-0 translate-y-0 hidden md:flex items-center justify-center">
                             <div className="relative h-[60vh] w-[40vw] overflow-hidden grayscale">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
+                                <Image
                                     src={service.image}
                                     alt={service.title}
-                                    className="h-full w-full object-cover"
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, 40vw"
                                 />
                             </div>
                         </div>

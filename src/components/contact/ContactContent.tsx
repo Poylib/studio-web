@@ -48,7 +48,7 @@ export default function ContactContent() {
                 </h1>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mt-12 w-full">
                 {/* Left Column: Contact Info & SNS */}
                 <div className="md:col-span-6 flex flex-col gap-12">
                     {/* Email */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 export default function Hero() {
@@ -22,9 +23,14 @@ export default function Hero() {
             >
                 <div className="h-full w-full bg-neutral-900">
                     {/* Placeholder for Hero Image - using a dark gradient for now */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90" />
-                    {/* You would replace this with <Image /> */}
-                    <div className="h-full w-full bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-50" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90 z-10" />
+                    <Image
+                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+                        alt="Socon Architecture"
+                        fill
+                        className="object-cover opacity-50"
+                        priority
+                    />
                 </div>
             </motion.div>
 
