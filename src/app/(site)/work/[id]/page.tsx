@@ -2,6 +2,7 @@ import { works } from "@/data/works";
 import WorkDetail from "@/components/work/WorkDetail";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 
 interface PageProps {
     params: Promise<{
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function WorkDetailPage({ params }: PageProps) {
     const { id } = await params;
     const work = works.find((w) => w.slug === id);
-
+    console.log("few", work)
     if (!work) {
         notFound();
     }
@@ -99,13 +100,17 @@ export default async function WorkDetailPage({ params }: PageProps) {
 
     return (
         <>
-            <script
+            <Script
+                id="json-ld-work"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                strategy="beforeInteractive"
             />
-            <script
+            <Script
+                id="json-ld-breadcrumb"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+                strategy="beforeInteractive"
             />
             <WorkDetail work={work} nextWork={nextWork} />
         </>
