@@ -1,12 +1,12 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   /* Brutalist Core */
   --background: #050505;
-  --foreground: #EAEAEA;
+  --foreground: #eaeaea;
   --color-surface: #111111;
   --color-secondary: #888888;
 
